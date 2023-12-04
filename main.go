@@ -1,26 +1,11 @@
 package main
 
 import (
-	"database/sql"
 	"forum/cmd/web"
-	"forum/pkg/models"
-	_ "github.com/mattn/go-sqlite3"
-	"html/template"
-	"log"
 	"net/http"
 )
 
-type application struct {
-	errorLog *log.Logger
-	infoLog  *log.Logger
-	users    interface {
-		Insert(string, string, string) error
-		Authenticate(string, string) (int, error)
-		Get(int) (*models.User, error)
-	}
-
-	templateCache map[string]*template.Template
-}
+//var db *sql.DB
 
 func main() {
 
@@ -40,15 +25,4 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", web.HandleLogin)
 	http.ListenAndServe(":8000", mux)
-}
-
-func openDB(dsn string) (*sql.DB, error) {
-	db, err := sql.Open("sqlite3", dsn)
-	if err != nil {
-		return nil, err
-	}
-	if err = db.Ping(); err != nil {
-		return nil, err
-	}
-	return db, nil
 }

@@ -9,4 +9,5 @@ type User struct {
 	hashedPw []byte
 	Created  time.Time
 	Active   bool
+	Password string
 }
