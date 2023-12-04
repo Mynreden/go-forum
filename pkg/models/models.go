@@ -6,8 +6,7 @@ type User struct {
 	ID       int
 	Name     string
 	Email    string
-	hashedPw []byte
+	HashedPw []byte
 	Created  time.Time
 	Active   bool
-	Password string
 }

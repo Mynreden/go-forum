@@ -23,6 +23,7 @@ func main() {
 	//defer db.Close()
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", web.HandleLogin)
+	mux.HandleFunc("/", web.HandleRegister)
+	mux.HandleFunc("/user/login", web.HandleLogin)
 	http.ListenAndServe(":8000", mux)
 }

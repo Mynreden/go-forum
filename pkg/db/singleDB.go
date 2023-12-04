@@ -1,19 +1,31 @@
 package db
 
-import "database/sql"
+import (
+	"database/sql"
+	"sync"
+)
 
 type DB struct {
-	db *sql.DB
+	Db *sql.DB
 }
 
-func (db *DB) OpenDB(dsn string) (*DB, error) {
-	database, err := sql.Open("sqlite3", dsn)
+var (
+	instance *DB
+	once     sync.Once
+)
+
+func GetSingleDBInstance() *DB {
+	once.Do(func() {
+		instance = &DB{}
+	})
+	return instance
+}
+
+func (db *DB) OpenDB(dsn string) error {
+	var err error
+	db.Db, err = sql.Open("sqlite3", dsn)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	if err = database.Ping(); err != nil {
-		return nil, err
-	}
-	db.db = database
-	return db, nil
+	return db.Db.Ping()
 }
