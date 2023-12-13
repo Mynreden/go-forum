@@ -1,7 +1,6 @@
 package web
 
 import (
-	"fmt"
 	"forum/pkg/db"
 	"forum/pkg/models"
 	_ "github.com/mattn/go-sqlite3"
@@ -13,7 +12,7 @@ import (
 )
 
 func HandleLogin(w http.ResponseWriter, r *http.Request) {
-	ts, err := template.ParseFiles("./ui/html/home.html")
+	ts, err := template.ParseFiles("./ui/html/login.html")
 
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
@@ -43,10 +42,11 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 			}
 		}
-
-		if s := r.FormValue("username"); s != "" {
-			if s == username {
-				fmt.Println(true)
+		usernameInput := r.FormValue("username")
+		passwordInput := r.FormValue("password")
+		if usernameInput != "" && passwordInput != "" {
+			if usernameInput == username && passwordInput == password {
+				http.Redirect(w, r, "/", 200)
 			}
 		}
 		// Process login (you'll need to add your own logic here)
@@ -55,15 +55,21 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
+	if r.URL.Path != "/user/register" {
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
 	ts, err := template.ParseFiles("./ui/html/home.html")
+	if err != nil {
+		log.Printf("EXECUTING TMPL ERROR %e", err)
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		return
+	}
 	switch r.Method {
 	case "GET":
 		err = ts.Execute(w, nil)
 		if err != nil {
+			log.Printf("EXECUTING TMPL ERROR %e", err)
 			http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 			return
 		}
@@ -92,7 +98,22 @@ func addUser(user *models.User, db *db.DB) error {
 	}
 	_, err = db.Db.Exec(query, user.Name, user.HashedPw, user.Email)
 	if err != nil {
-		return err
+		if err.Error() == "database is locked" {
+			// Handle the database is locked error
+			log.Printf("Database is locked, retrying: %v", err)
+			// Implement a retry mechanism or return a specific error
+		} else {
+			log.Printf("Error adding user: %v", err)
+		}
 	}
-	return nil
+
+	return err
+
+}
+
+func Home(w http.ResponseWriter, r *http.Request) {
+	_, err := w.Write([]byte(`This is a home page`))
+	if err != nil {
+		return
+	}
 }

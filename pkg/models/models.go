@@ -10,3 +10,10 @@ type User struct {
 	Created  time.Time
 	Active   bool
 }
+
+type Session struct {
+	UserID  int
+	Token   string
+	Created time.Time
+	Expires time.Time
+}

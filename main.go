@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"forum/cmd/web"
 	"net/http"
 )
@@ -23,7 +24,12 @@ func main() {
 	//defer db.Close()
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", web.HandleRegister)
+	mux.HandleFunc("/", web.Home)
+	mux.HandleFunc("/user/register", web.HandleRegister)
 	mux.HandleFunc("/user/login", web.HandleLogin)
-	http.ListenAndServe(":8000", mux)
+	err := http.ListenAndServe(":8000", mux)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
