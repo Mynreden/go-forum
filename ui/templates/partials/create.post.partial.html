@@ -1,0 +1,80 @@
+{{define "create_post"}}
+
+<div class="submit_post_box">
+  <div id="createPost" class="create_post" onclick="toggleForm()">
+    create post
+  </div>
+  <form
+    id="postForm"
+    action="/post/create"
+    method="post"
+    enctype="multipart/form-data"
+    onsubmit="return validateForm();"
+  >
+    <div class="ffl-l">
+      <textarea
+        name="content"
+        id="myTextarea"
+        oninput="adjustTextarea()"
+        maxlength="500"
+        minlength="1"
+        placeholder="bla bla bla ..."
+        required
+      ></textarea>
+    </div>
+    <div class="ffl-r">
+      <input
+        type="text"
+        name="title"
+        maxlength="100"
+        minlength="1"
+        class="pst-tt-upl d-b"
+        placeholder="Title"
+        required
+      />
+      <div class="img-upld ffl-l">
+        <!-- <input
+          type="file"
+          id="image-input"
+          name="image"
+          accept="image/*"
+          onchange="previewImage(event)"
+          class="img-upload d-b"
+          placeholder=":)"
+        />
+        <label id="file-input-label" for="image-input"></label>
+        <div id="image-preview" class="uploading-img-prev"></div> -->
+      </div>
+      <div class="d-f ffl-r">
+        <div class="category m-7">
+          <div class="category-input-btn">
+            <input
+              type="text"
+              id="inputField"
+              readonly="false"
+              name="category"
+              onclick="toggleList()"
+              placeholder="category"
+              required
+            />
+          </div>
+          <div id="listContainer" class="list-container" style="display: none">
+            {{range .Categories}}
+            <label class="option">
+              <input
+                type="checkbox"
+                value="{{.Name}}"
+                class="option"
+              />{{.Name}}</label
+            ><br />
+            {{end}}
+            <div onclick="addItem()" class="btn-options">select</div>
+          </div>
+        </div>
+        <button type="submit" class="create-post-btn m-7">submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+{{end}}

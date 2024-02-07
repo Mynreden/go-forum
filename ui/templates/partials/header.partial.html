@@ -1,0 +1,49 @@
+{{define "header"}}
+<header>
+  <div class="container">
+    <div class="header">
+      <div class="header_item-logo fl_l">
+        <div class="logo">
+          <a href="/" class="logo">
+            <img src="/static/assets/logo.png" alt="Logo" class="logo_header" />
+            <span class="logo_name"> Forum </span>
+          </a>
+        </div>
+      </div>
+      <div class="header_item-gap fl_r">
+        <div class="page_name">{{.Topic}}</div>
+        <div>
+          {{if .AuthenticatedUser}}
+          <div class="profil">
+            <div class="username">{{.AuthenticatedUser.Username}}</div>
+            <!-- <img
+                src="/static/assets/standard_profil_logo.png"
+                alt=""
+                class="user_img"
+            /> -->
+            <div class="butn"></div>
+            <div class="btn_updown">
+              <div class="arrow-4 open">
+                <span class="arrow-4-left"></span>
+                <span class="arrow-4-right"></span>
+              </div>
+            </div>
+          </div>
+          <div class="profil_nav_bar">
+            <a href="/logout" class="header-logout-btn">logout</a>
+          </div>
+
+          {{else}}
+          <div class="profil">
+            <a href="/login" class="button-header r-10"> Log-in </a>
+
+            <a href="/register" class="button-header"> Reg-in </a>
+          </div>
+          {{end}}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+{{end}}

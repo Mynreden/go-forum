@@ -1,0 +1,45 @@
+{{range .Posts}}
+<a href="/post?id={{.ID}}">
+  <div class="post-table">
+    <div class="post-header">
+      <div class="post-autor-datas">
+        <div class="post-autorname">{{.AuthorName}}</div>
+        <div class="post-createdtime">{{humanDate .CreatedAt}}</div>
+      </div>
+      <div class="post-ctg">
+        {{range .Categories}}
+        <div id="categories-container">
+          <pre class="post-category-anme">{{.Name}} </pre>
+        </div>
+        {{end}}
+      </div>
+    </div>
+    <div class="post-content-datas">
+      <img src="{{.ImagePath}}" alt="" />
+      <div class="post-title">{{.Title}}</div>
+      <div class="post-content">{{.Content}}</div>
+    </div>
+    <div class="post-reactions-datas">
+      <div class="reactions">
+        <img
+          src="/static/assets/8300917.png"
+          class="reaction"
+          style="transform: scaleY(-1)"
+          alt="like button"
+        />
+        {{.Likes}}
+      </div>
+      <div class="reactions">
+        <img
+          src="/static/assets/8300917.png"
+          class="reaction"
+          alt="dislike button"
+        />
+        {{.Dislikes}}
+      </div>
+
+      <!-- reactions -->
+    </div>
+  </div>
+</a>
+{{end}}

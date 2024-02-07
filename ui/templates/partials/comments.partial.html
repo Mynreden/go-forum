@@ -1,0 +1,56 @@
+{{define "comments"}}
+<div class="comments">
+  {{if .AuthenticatedUser}}
+  <div class="title-comm">Comments</div>
+  <div class="comment_form">
+    <form action="/comment/create" method="post">
+      <textarea name="content" id="" placeholder="comment" maxlength="280" cols="30" rows="10" class="comment-input" required></textarea>
+      <button type="submit" name="post_id" value="{{.Post.ID}}">submit</button>
+    </form>
+    {{with .Form}} {{with .Errors.Get "content"}} {{.}} {{end}} {{end}}
+  </div>
+  {{end}}
+  <br />
+  {{range .Comments}}
+  <div class="comment">
+    <div class="post-header">
+      <div class="post-autor-datas">
+        <div class="post-autorname">{{.AuthorName}}</div>
+        <div class="post-createdtime">{{humanDate .CreatedAt}}</div>
+      </div>
+    </div>
+    <div class="comment-content">{{.Content}}</div>
+    <div class="post-reactions-datas">
+      <form action="/comment/reaction" method="POST">
+        <input type="hidden" name="post_id" value="{{.PostID}}" />
+        <input type="hidden" name="comment_id" value="{{.ID}}" />
+        <input type="hidden" name="status" value="1" />
+        <button type="submit">
+          <img
+            src="/static/assets/8300917.png"
+            class="reaction"
+            style="transform: scaleY(-1)"
+            alt="like button"
+          />
+          {{.Likes}}
+        </button>
+      </form>
+      <form action="/comment/reaction" method="POST">
+        <input type="hidden" name="post_id" value="{{.PostID}}" />
+        <input type="hidden" name="comment_id" value="{{.ID}}" />
+        <input type="hidden" name="status" value="0" />
+        <button type="submit">
+          <img
+            src="/static/assets/8300917.png"
+            class="reaction"
+            alt="dislike button"
+          />
+          {{.Dislikes}}
+        </button>
+      </form>
+      <!-- reactions -->
+    </div>
+  </div>
+  {{end}}
+</div>
+{{end}}

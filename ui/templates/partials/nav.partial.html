@@ -1,0 +1,33 @@
+{{define "nav_bar"}}
+
+<nav class="nav_bar fl_l">
+  <a href="/" class="nav-link">
+    <img src="/static/assets/home.png" alt="" />
+    <span>news</span>
+  </a>
+  <a href="/myposts" class="nav-link">
+    <img src="/static/assets/mypost.png" alt="" />
+    <span>my posts</span>
+  </a>
+  <a href="/likedposts" class="nav-link">
+    <img src="/static/assets/likepost.png" alt="" />
+    <span>liked posts</span>
+  </a>
+  <div class="nav-form-ctg">
+    <div class="ctg_title">
+      categories
+    </div>
+    <form action="/postscat" method="GET">
+      <div class="dropdown">
+        <select name="category" required>
+          {{range .Categories}}
+          <option value="{{.Name}}">{{.Name}}</option>
+          {{end}}
+        </select>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</nav>
+
+{{end}}
