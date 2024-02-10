@@ -416,3 +416,36 @@ ERROR: 2024/02/01 17:55:42 home.go:18: strconv.Atoi: parsing "": invalid syntax
 ERROR: 2024/02/01 17:55:42 home.go:23: strconv.Atoi: parsing "": invalid syntax
 ERROR: 2024/02/01 17:55:46 home.go:18: strconv.Atoi: parsing "": invalid syntax
 ERROR: 2024/02/01 17:55:46 home.go:23: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:17:19 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:19 home.go:18: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:17:19 home.go:23: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:17:19 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:19 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:19 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:19 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:19 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:19 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:19 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:19 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:23 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:37 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:37 login.go:56: invalid credentials
+ERROR: 2024/02/10 14:17:44 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:44 login.go:56: invalid credentials
+ERROR: 2024/02/10 14:17:50 middleware.go:15: http: named cookie not present
+ERROR: 2024/02/10 14:17:50 home.go:18: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:17:50 home.go:23: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:17:59 login.go:56: invalid credentials
+ERROR: 2024/02/10 14:18:06 home.go:18: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:18:06 home.go:23: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:18:52 home.go:18: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:18:52 home.go:23: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:19:21 create_post.go:173: open ui/static/img/2843b244-173d-440f-8dde-93b42aef8d1c: no such file or directory
+ERROR: 2024/02/10 14:20:19 create_post.go:173: open ui/static/img/e284a341-d75b-411a-9eaa-85c877d5df15: no such file or directory
+ERROR: 2024/02/10 14:27:39 home.go:18: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:27:39 home.go:23: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:28:06 home.go:18: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:28:06 home.go:23: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:28:19 create_post.go:74: http: no such file
+ERROR: 2024/02/10 14:28:21 home.go:18: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/02/10 14:28:21 home.go:23: strconv.Atoi: parsing "": invalid syntax
