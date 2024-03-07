@@ -2,7 +2,7 @@ package forms
 
 import (
 	"fmt"
-	"forum/internal/models"
+	"forum/internal/domain"
 	"mime/multipart"
 	"net/url"
 	"regexp"
@@ -19,7 +19,7 @@ var EmailRX = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9
 type Form struct {
 	url.Values
 	Errors     errors
-	Categories []*models.Category
+	Categories []*domain.Category
 	FileHeader *multipart.FileHeader
 }
 
@@ -27,7 +27,7 @@ func New(data url.Values) *Form {
 	return &Form{
 		data,
 		errors(map[string][]string{}),
-		[]*models.Category{},
+		[]*domain.Category{},
 		nil,
 	}
 }

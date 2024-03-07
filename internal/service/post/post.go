@@ -1,7 +1,7 @@
 package post
 
 import (
-	"forum/internal/models"
+	"forum/internal/domain"
 	"io/ioutil"
 	"strings"
 	"time"
@@ -10,10 +10,10 @@ import (
 )
 
 type PostService struct {
-	repo models.PostRepo
+	repo domain.PostRepo
 }
 
-func NewPostService(repo models.PostRepo) *PostService {
+func NewPostService(repo domain.PostRepo) *PostService {
 	return &PostService{repo}
 }
 
@@ -21,8 +21,8 @@ func (s *PostService) DeletePost(id int) error {
 	return nil
 }
 
-func (p *PostService) CreatePost(postDTO *models.CreatePostDTO) (int, error) {
-	post := &models.Post{
+func (p *PostService) CreatePost(postDTO *domain.CreatePostDTO) (int, error) {
+	post := &domain.Post{
 		Title:      postDTO.Title,
 		Content:    postDTO.Content,
 		AuthorID:   postDTO.Author,
@@ -34,7 +34,7 @@ func (p *PostService) CreatePost(postDTO *models.CreatePostDTO) (int, error) {
 	return p.repo.CreatePost(post)
 }
 
-func (p *PostService) CreatePostWithImage(postDTO *models.CreatePostDTO) (int, error) {
+func (p *PostService) CreatePostWithImage(postDTO *domain.CreatePostDTO) (int, error) {
 	if postDTO.ImageFile == nil {
 		return p.CreatePost(postDTO)
 	}
@@ -55,7 +55,7 @@ func (p *PostService) CreatePostWithImage(postDTO *models.CreatePostDTO) (int, e
 		return 0, err
 	}
 	filePath = filePath[2:]
-	post := &models.Post{
+	post := &domain.Post{
 		Title:      postDTO.Title,
 		Content:    postDTO.Content,
 		AuthorID:   postDTO.Author,
@@ -74,19 +74,19 @@ func (p *PostService) CreatePostWithImage(postDTO *models.CreatePostDTO) (int, e
 	return id, nil
 }
 
-func (s *PostService) UpdatePost(post *models.Post) error {
+func (s *PostService) UpdatePost(post *domain.Post) error {
 	return nil
 }
 
-func (s *PostService) GetPostsByAuthorID(author int, offset int, limit int) ([]*models.Post, error) {
-	return s.repo.GetPostsByAuthor(author, offset , limit )
+func (s *PostService) GetPostsByAuthorID(author int, offset int, limit int) ([]*domain.Post, error) {
+	return s.repo.GetPostsByAuthor(author, offset, limit)
 }
 
-func (s *PostService) GetAllPosts(offset, limit int) ([]*models.Post, error) {
+func (s *PostService) GetAllPosts(offset, limit int) ([]*domain.Post, error) {
 	return s.repo.GetAllPosts(offset, limit)
 }
 
-func (p *PostService) GetPostByID(id int) (*models.Post, error) {
+func (p *PostService) GetPostByID(id int) (*domain.Post, error) {
 	post, err := p.repo.GetPostByID(id)
 	if err != nil {
 		return nil, err
@@ -102,10 +102,10 @@ func (p *PostService) GetPostByID(id int) (*models.Post, error) {
 	return post, nil
 }
 
-func (p *PostService) GetLikedPosts(id int, offset int, limit int) ([]*models.Post, error) {
-	return p.repo.GetLikedPosts(id , offset , limit)
+func (p *PostService) GetLikedPosts(id int, offset int, limit int) ([]*domain.Post, error) {
+	return p.repo.GetLikedPosts(id, offset, limit)
 }
 
-func (p *PostService) GetPostsByCategory(category string, offset int, limit int) ([]*models.Post, error) {
-	return p.repo.GetPostsByCategory(category, offset , limit )
+func (p *PostService) GetPostsByCategory(category string, offset int, limit int) ([]*domain.Post, error) {
+	return p.repo.GetPostsByCategory(category, offset, limit)
 }

@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"forum/internal/models"
+	"forum/internal/domain"
 	"log"
 	"time"
 )
@@ -20,7 +20,7 @@ func NewPostStorage(db *sql.DB) *PostStorage {
 
 var ErrRecordNotFound = errors.New("post not found")
 
-func (s *PostStorage) CreatePost(p *models.Post) (int, error) {
+func (s *PostStorage) CreatePost(p *domain.Post) (int, error) {
 	query := `INSERT INTO posts (title, content, author_id, authorname, created_at, updated_at) 
 	VALUES ($1, $2, $3, $4, $5, $6)
 	RETURNING id, created_at, updated_at`
@@ -48,7 +48,10 @@ func (s *PostStorage) CreatePost(p *models.Post) (int, error) {
 	return p.ID, nil
 }
 
-func (s *PostStorage) CreatePostWithImage(p *models.Post) (int, error) {
+func (s *PostStorage) CreatePostWithImage(p *domain.Post) (int, error) {
+	if p.Title == "" {
+		return 0, errors.New("post title is empty")
+	}
 	query := `INSERT INTO posts (title, content, author_id, authorname, created_at, updated_at) 
 	VALUES ($1, $2, $3, $4, $5, $6) 
 	RETURNING id, created_at, updated_at`
@@ -81,15 +84,15 @@ func (s *PostStorage) CreatePostWithImage(p *models.Post) (int, error) {
 	return p.ID, nil
 }
 
-func (s *PostStorage) DeletePost(post *models.Post) error {
+func (s *PostStorage) DeletePost(post *domain.Post) error {
 	return nil
 }
 
-func (s *PostStorage) UpdatePost(post *models.Post) error {
+func (s *PostStorage) UpdatePost(post *domain.Post) error {
 	return nil
 }
 
-func (s *PostStorage) GetAllPosts(offset, limit int) ([]*models.Post, error) {
+func (s *PostStorage) GetAllPosts(offset, limit int) ([]*domain.Post, error) {
 	query := `SELECT * FROM posts ORDER BY id DESC LIMIT $1 OFFSET $2`
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
@@ -103,10 +106,10 @@ func (s *PostStorage) GetAllPosts(offset, limit int) ([]*models.Post, error) {
 	}
 	defer rows.Close()
 
-	var posts []*models.Post
+	var posts []*domain.Post
 
 	for rows.Next() {
-		post := models.Post{}
+		post := domain.Post{}
 
 		err := rows.Scan(
 			&post.ID,
@@ -152,7 +155,7 @@ func (s *PostStorage) GetAllPosts(offset, limit int) ([]*models.Post, error) {
 	return posts, nil
 }
 
-func (s *PostStorage) getAllIMG(ctx context.Context, post *models.Post) error {
+func (s *PostStorage) getAllIMG(ctx context.Context, post *domain.Post) error {
 	query := `SELECT image_path FROM images WHERE post_id = $1`
 	img_row := s.db.QueryRowContext(ctx, query, post.ID)
 
@@ -167,7 +170,7 @@ func (s *PostStorage) getAllIMG(ctx context.Context, post *models.Post) error {
 	return err
 }
 
-func (s *PostStorage) getAllPostCategories(ctx context.Context, post *models.Post) error {
+func (s *PostStorage) getAllPostCategories(ctx context.Context, post *domain.Post) error {
 	query := `SELECT c.category_name FROM categories c
 	JOIN PostCategories pc ON c.category_name = pc.category_name
 	WHERE pc.post_id = $1`
@@ -178,7 +181,7 @@ func (s *PostStorage) getAllPostCategories(ctx context.Context, post *models.Pos
 	}
 
 	for category_rows.Next() {
-		category := models.Category{}
+		category := domain.Category{}
 
 		err := category_rows.Scan(&category.Name)
 		if err != nil {
@@ -195,7 +198,7 @@ func (s *PostStorage) getAllPostCategories(ctx context.Context, post *models.Pos
 	return nil
 }
 
-func (s *PostStorage) GetPostByID(id int) (*models.Post, error) {
+func (s *PostStorage) GetPostByID(id int) (*domain.Post, error) {
 	if id < 1 {
 		return nil, ErrRecordNotFound
 	}
@@ -205,7 +208,7 @@ func (s *PostStorage) GetPostByID(id int) (*models.Post, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	post := &models.Post{}
+	post := &domain.Post{}
 
 	err := s.db.QueryRowContext(ctx, query, id).Scan(&post.ID,
 		&post.Title,
@@ -225,9 +228,7 @@ func (s *PostStorage) GetPostByID(id int) (*models.Post, error) {
 	}
 
 	// Get post categories
-	query = `SELECT c.category_name FROM categories c
-	JOIN PostCategories pc ON c.category_name = pc.category_name
-	WHERE pc.post_id = $1`
+	query = `SELECT category_name FROM PostCategories WHERE post_id = $1`
 
 	rows, err := s.db.QueryContext(ctx, query, id)
 	if err != nil {
@@ -236,7 +237,7 @@ func (s *PostStorage) GetPostByID(id int) (*models.Post, error) {
 	}
 
 	for rows.Next() {
-		category := models.Category{}
+		category := domain.Category{}
 
 		err := rows.Scan(&category.Name)
 		if err != nil {
@@ -271,7 +272,7 @@ func (s *PostStorage) GetPostByID(id int) (*models.Post, error) {
 	return post, nil
 }
 
-func (s *PostStorage) GetLikedPosts(id int, offset int, limit int) ([]*models.Post, error) {
+func (s *PostStorage) GetLikedPosts(id int, offset int, limit int) ([]*domain.Post, error) {
 	query := `SELECT p.id, p.title, p.content, p.author_id, p.authorname, p.created_at, p.updated_at FROM posts p
 	JOIN postsReactions a ON p.id = a.post_id
 	WHERE a.user_id = $1 AND a.reaction = 1
@@ -289,10 +290,10 @@ func (s *PostStorage) GetLikedPosts(id int, offset int, limit int) ([]*models.Po
 	}
 	defer rows.Close()
 
-	var posts []*models.Post
+	var posts []*domain.Post
 
 	for rows.Next() {
-		post := models.Post{}
+		post := domain.Post{}
 
 		err := rows.Scan(
 			&post.ID,
@@ -339,7 +340,7 @@ func (s *PostStorage) GetLikedPosts(id int, offset int, limit int) ([]*models.Po
 	return posts, nil
 }
 
-func (s *PostStorage) GetPostsByCategory(category string, offset int, limit int) ([]*models.Post, error) {
+func (s *PostStorage) GetPostsByCategory(category string, offset int, limit int) ([]*domain.Post, error) {
 	query := `SELECT p.* FROM posts p
 	JOIN PostCategories pc ON p.id = pc.post_id
 	WHERE pc.category_name = $1
@@ -355,10 +356,10 @@ func (s *PostStorage) GetPostsByCategory(category string, offset int, limit int)
 	}
 	defer rows.Close()
 
-	var posts []*models.Post
+	var posts []*domain.Post
 
 	for rows.Next() {
-		post := models.Post{}
+		post := domain.Post{}
 
 		err := rows.Scan(&post.ID,
 			&post.Title,
@@ -401,7 +402,7 @@ func (s *PostStorage) GetPostsByCategory(category string, offset int, limit int)
 	return posts, nil
 }
 
-func (s *PostStorage) GetPostsByAuthor(author int, offset int, limit int) ([]*models.Post, error) {
+func (s *PostStorage) GetPostsByAuthor(author int, offset int, limit int) ([]*domain.Post, error) {
 	query := `SELECT * FROM posts WHERE author_id = $1
 	ORDER BY id DESC
 	LIMIT $3 OFFSET $4`
@@ -415,10 +416,10 @@ func (s *PostStorage) GetPostsByAuthor(author int, offset int, limit int) ([]*mo
 	}
 	defer rows.Close()
 
-	var posts []*models.Post
+	var posts []*domain.Post
 
 	for rows.Next() {
-		post := models.Post{}
+		post := domain.Post{}
 
 		err := rows.Scan(&post.ID,
 			&post.Title,

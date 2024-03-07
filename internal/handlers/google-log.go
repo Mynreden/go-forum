@@ -3,13 +3,14 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"forum/internal/handlers/utils"
 	"io/ioutil"
 	"net/http"
 	"strings"
 	"time"
 
+	"forum/internal/domain"
 	"forum/internal/helpers/cookies"
-	"forum/internal/models"
 )
 
 const (
@@ -58,7 +59,7 @@ func (h *Handler) handleGoogleCallback(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get user info using the access token
-	userInfo, err := h.getUserInfo(accessToken, googleUserInfoURL)
+	userInfo, err := utils.GetUserInfo(accessToken, googleUserInfoURL)
 	if err != nil {
 		h.service.Log.Printf("Failed to get user info: %v", err)
 		http.Error(w, "Failed to get user info", http.StatusInternalServerError)
@@ -76,7 +77,7 @@ func (h *Handler) handleGoogleCallback(w http.ResponseWriter, r *http.Request) {
 
 	user, _ := h.service.UserService.GetUserByEmail(googleUserInfo.Email)
 	if user == nil {
-		userDTO := &models.CreateUserDTO{
+		userDTO := &domain.CreateUserDTO{
 			Username: googleUserInfo.Name,
 			Email:    googleUserInfo.Email,
 			Password: googleUserInfo.Sub,
@@ -89,7 +90,7 @@ func (h *Handler) handleGoogleCallback(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	userLogin := &models.LoginUserDTO{
+	userLogin := &domain.LoginUserDTO{
 		Email:    googleUserInfo.Email,
 		Password: googleUserInfo.Sub,
 	}

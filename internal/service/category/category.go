@@ -1,18 +1,18 @@
 package category
 
 import (
-	"forum/internal/models"
+	"forum/internal/domain"
 )
 
 type CategoryService struct {
-	repo models.CategoryRepo
+	repo domain.CategoryRepo
 }
 
-func NewCategoryService(repo models.CategoryRepo) *CategoryService {
+func NewCategoryService(repo domain.CategoryRepo) *CategoryService {
 	return &CategoryService{repo}
 }
 
-func (c *CategoryService) CreateCategory(category *models.Category) (string, error) {
+func (c *CategoryService) CreateCategory(category *domain.Category) (string, error) {
 	name, err := c.repo.CreateCategory(category)
 	if err != nil {
 		return "", err
@@ -21,7 +21,7 @@ func (c *CategoryService) CreateCategory(category *models.Category) (string, err
 	return name, nil
 }
 
-func (c *CategoryService) GetAllCategories() ([]*models.Category, error) {
+func (c *CategoryService) GetAllCategories() ([]*domain.Category, error) {
 	categories, err := c.repo.GetAllCategories()
 	if err != nil {
 		return nil, err
@@ -30,7 +30,7 @@ func (c *CategoryService) GetAllCategories() ([]*models.Category, error) {
 	return categories, nil
 }
 
-func (c *CategoryService) GetCategoryByName(name string) (*models.Category, error) {
+func (c *CategoryService) GetCategoryByName(name string) (*domain.Category, error) {
 	category, err := c.repo.GetCategoryByName(name)
 	if err != nil {
 		return nil, err

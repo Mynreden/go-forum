@@ -1,7 +1,7 @@
 package service
 
 import (
-	"forum/internal/models"
+	"forum/internal/domain"
 	"forum/internal/repository"
 	"forum/internal/service/category"
 	"forum/internal/service/comment"
@@ -14,13 +14,13 @@ import (
 )
 
 type Service struct {
-	UserService            models.UserService
-	PostService            models.PostService
-	CommentService         models.CommentService
-	CommentReactionService models.CommentReactionService
-	SessionService         models.SessionServise
-	CategoryService        models.CategoryService
-	PostReactionService    models.PostReactionService
+	UserService            domain.UserService
+	PostService            domain.PostService
+	CommentService         domain.CommentService
+	CommentReactionService domain.CommentReactionService
+	SessionService         domain.SessionServise
+	CategoryService        domain.CategoryService
+	PostReactionService    domain.PostReactionService
 	Log                    *log.Logger
 }
 

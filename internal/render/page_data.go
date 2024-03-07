@@ -1,16 +1,16 @@
 package render
 
 import (
-	"forum/internal/models"
+	"forum/internal/domain"
 	"forum/pkg/forms"
 )
 
 type PageData struct {
 	Topic             string
 	Form              *forms.Form
-	AuthenticatedUser *models.User
-	Post              *models.Post
-	Posts             []*models.Post
-	Categories        []*models.Category
-	Comments          []*models.Comment
+	AuthenticatedUser *domain.User
+	Post              *domain.Post
+	Posts             []*domain.Post
+	Categories        []*domain.Category
+	Comments          []*domain.Comment
 }

@@ -1,20 +1,20 @@
 package comment
 
 import (
-	"forum/internal/models"
+	"forum/internal/domain"
 	"time"
 )
 
 type CommentService struct {
-	repo models.CommentRepo
+	repo domain.CommentRepo
 }
 
-func NewCommentService(repo models.CommentRepo) *CommentService {
+func NewCommentService(repo domain.CommentRepo) *CommentService {
 	return &CommentService{repo}
 }
 
-func (c *CommentService) CreateComment(commentDTO *models.CreateCommentDTO) error {
-	comment := &models.Comment{
+func (c *CommentService) CreateComment(commentDTO *domain.CreateCommentDTO) error {
+	comment := &domain.Comment{
 		Content:    commentDTO.Content,
 		AuthorID:   commentDTO.AuthorID,
 		AuthorName: commentDTO.AuthorName,
@@ -29,7 +29,7 @@ func (c *CommentService) CreateComment(commentDTO *models.CreateCommentDTO) erro
 	return nil
 }
 
-func (c *CommentService) GetAllByPostID(postID int) ([]*models.Comment, error) {
+func (c *CommentService) GetAllByPostID(postID int) ([]*domain.Comment, error) {
 	comments, err := c.repo.GetAllByPostID(postID)
 	if err != nil {
 		return nil, err
@@ -38,7 +38,7 @@ func (c *CommentService) GetAllByPostID(postID int) ([]*models.Comment, error) {
 	return comments, nil
 }
 
-func (c *CommentService) GetCommentByID(id int) (*models.Comment, error) {
+func (c *CommentService) GetCommentByID(id int) (*domain.Comment, error) {
 	return c.repo.GetCommentByID(id)
 }
 
@@ -48,6 +48,6 @@ func (c *CommentService) GetCommentByID(id int) (*models.Comment, error) {
 // 	return nil
 // }
 
-// func (c *CommentService) UpdateComment(comment *models.Comment) error {
+// func (c *CommentService) UpdateComment(comment *domain.Comment) error {
 // 	return nil
 // }

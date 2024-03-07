@@ -2,7 +2,7 @@ package repository
 
 import (
 	"database/sql"
-	"forum/internal/models"
+	"forum/internal/domain"
 	"forum/internal/repository/category"
 	"forum/internal/repository/comment"
 	"forum/internal/repository/commentsReaction"
@@ -14,13 +14,13 @@ import (
 )
 
 type Repository struct {
-	CommentRepo         models.CommentRepo
-	CommentReactionRepo models.CommentReactionRepo
-	PostRepo            models.PostRepo
-	UserRepo            models.UserRepo
-	SessionRepo         models.SessionRepo
-	CategoryRepo        models.CategoryRepo
-	PostReactionRepo    models.PostReactionRepo
+	CommentRepo         domain.CommentRepo
+	CommentReactionRepo domain.CommentReactionRepo
+	PostRepo            domain.PostRepo
+	UserRepo            domain.UserRepo
+	SessionRepo         domain.SessionRepo
+	CategoryRepo        domain.CategoryRepo
+	PostReactionRepo    domain.PostReactionRepo
 }
 
 func NewRepository(db *sql.DB) *Repository {

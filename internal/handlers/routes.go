@@ -1,40 +1,34 @@
 package handlers
 
 import (
+	"forum/internal/handlers/auth"
+	"forum/internal/handlers/comments"
+	"forum/internal/handlers/middlewares"
+	"forum/internal/handlers/posts"
+	"forum/internal/handlers/web"
+	"github.com/gorilla/mux"
 	"net/http"
 	"path/filepath"
 )
 
 func (h *Handler) Routes() http.Handler {
-	mux := http.NewServeMux()
-	// add a css file to route
-	fileServer := http.FileServer(neuteredFileSystem{http.Dir("./ui/static")})
-	mux.Handle("/static/", http.StripPrefix("/static/", fileServer))
+	router := mux.NewRouter()
 
-	mux.HandleFunc("/", h.home)
-	mux.HandleFunc("/login", h.login)
-	mux.HandleFunc("/register", h.register)
-	mux.Handle("/logout", h.requireAuthentication(http.HandlerFunc(h.logout)))
+	authHandler := auth.NewAuthHandler(h.service, h.templates)
+	commentsHandler := comments.NewCommentsHandler(h.service)
+	middleware := middlewares.NewMiddleware(h.service)
+	webHandler := web.NewWebHandler(h.service, h.templates)
+	postHandler := posts.NewPostsHandler(h.service, h.templates)
 
-	mux.HandleFunc("/post/", h.showPost)
-	mux.HandleFunc("/posts", h.GetPosts)
-	mux.Handle("/lp", h.requireAuthentication(http.HandlerFunc(h.GetLikedPosts)))
-	
-	
-	mux.HandleFunc("/postscat", h.showPostsByCategory)
-	mux.HandleFunc("/pc", h.GetPostsCat)
-	
-	mux.Handle("/myposts", h.requireAuthentication(http.HandlerFunc(h.myposts)))
-	mux.Handle("/mp", h.requireAuthentication(http.HandlerFunc(h.GetMyPosts)))
-	
-	mux.Handle("/post/create", h.requireAuthentication(http.HandlerFunc(h.createPost)))
-	mux.Handle("/post/reaction", h.requireAuthentication(http.HandlerFunc(h.reactionPost)))
-	mux.Handle("/likedposts", h.requireAuthentication(http.HandlerFunc(h.likedPosts)))
-	
-	mux.Handle("/comment/create", h.requireAuthentication(http.HandlerFunc(h.createComment)))
-	mux.Handle("/comment/reaction", h.requireAuthentication(http.HandlerFunc(h.reactionComment)))
+	router.PathPrefix("/auth/").Handler(http.StripPrefix("/auth", authHandler.Routes()))
+	router.PathPrefix("/post/").Handler(http.StripPrefix("/post", middleware.RequireAuthentication(postHandler.Routes())))
+	router.PathPrefix("/comment/").Handler(http.StripPrefix("/comment", middleware.RequireAuthentication(commentsHandler.Routes())))
 
-	return h.authenticate(mux)
+	fileServer := http.FileServer(http.Dir("./ui/static"))
+	router.PathPrefix("/static/").Handler(http.StripPrefix("/static", fileServer))
+	router.PathPrefix("/").Handler(http.StripPrefix("", webHandler.Routes()))
+
+	return middleware.Authenticate(router)
 }
 
 type neuteredFileSystem struct {

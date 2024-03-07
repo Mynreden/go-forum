@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"forum/internal/handlers/utils"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -10,11 +11,9 @@ import (
 	"strings"
 	"time"
 
+	"forum/internal/domain"
 	"forum/internal/helpers/cookies"
-	"forum/internal/models"
 )
-
-
 
 const (
 	githubAuthURL     = "https://github.com/login/oauth/authorize"
@@ -26,7 +25,6 @@ type githubUserInfo struct {
 	Name   string `json:"name"`
 	NodeID string `json:"node_id"`
 }
-
 
 func (h *Handler) handleGithubLogin(w http.ResponseWriter, r *http.Request) {
 	url := fmt.Sprintf("%s?client_id=%s&redirect_uri=%s&scope=user:email", githubAuthURL, h.githubConfig.ClientID, h.githubConfig.RedirectURL)
@@ -62,7 +60,7 @@ func (h *Handler) handleGithubCallback(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get user info using the access token
-	userInfo, err := h.getUserInfo(accessToken, githubUserInfoURL)
+	userInfo, err := utils.GetUserInfo(accessToken, githubUserInfoURL)
 	if err != nil {
 		log.Printf("Failed to get user info: %v", err)
 		http.Error(w, "Failed to get user info", http.StatusInternalServerError)
@@ -82,7 +80,7 @@ func (h *Handler) handleGithubCallback(w http.ResponseWriter, r *http.Request) {
 	// ...
 	user, _ := h.service.UserService.GetUserByEmail(githubUserInfo.NodeID)
 	if user == nil {
-		userDTO := &models.CreateUserDTO{
+		userDTO := &domain.CreateUserDTO{
 			Username: githubUserInfo.Name,
 			Email:    githubUserInfo.NodeID,
 			Password: githubUserInfo.NodeID,
@@ -95,7 +93,7 @@ func (h *Handler) handleGithubCallback(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	userLogin := &models.LoginUserDTO{
+	userLogin := &domain.LoginUserDTO{
 		Email:    githubUserInfo.NodeID,
 		Password: githubUserInfo.NodeID,
 	}

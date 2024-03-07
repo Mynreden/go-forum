@@ -3,7 +3,7 @@ package category
 import (
 	"database/sql"
 	"errors"
-	"forum/internal/models"
+	"forum/internal/domain"
 )
 
 type CategoryStorage struct {
@@ -14,16 +14,16 @@ func NewCategoryStorage(db *sql.DB) *CategoryStorage {
 	return &CategoryStorage{db}
 }
 
-func (s *CategoryStorage) GetAllCategories() ([]*models.Category, error) {
+func (s *CategoryStorage) GetAllCategories() ([]*domain.Category, error) {
 	rows, err := s.db.Query("SELECT category_name FROM categories")
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	categories := make([]*models.Category, 0)
+	categories := make([]*domain.Category, 0)
 	for rows.Next() {
-		category := new(models.Category)
+		category := new(domain.Category)
 		err := rows.Scan(&category.Name)
 		if err != nil {
 			return nil, err
@@ -38,7 +38,7 @@ func (s *CategoryStorage) GetAllCategories() ([]*models.Category, error) {
 	return categories, nil
 }
 
-func (s *CategoryStorage) CreateCategory(category *models.Category) (string, error) {
+func (s *CategoryStorage) CreateCategory(category *domain.Category) (string, error) {
 	if category.Name == "" {
 		return "", errors.New("categories name is empty")
 	}
@@ -52,14 +52,14 @@ func (s *CategoryStorage) CreateCategory(category *models.Category) (string, err
 }
 
 // TODO: implement
-func (s *CategoryStorage) GetCategoryByID(id int) (*models.Category, error) {
+func (s *CategoryStorage) GetCategoryByID(id int) (*domain.Category, error) {
 	return nil, nil
 }
 
-func (s *CategoryStorage) GetCategoryByName(name string) (*models.Category, error) {
+func (s *CategoryStorage) GetCategoryByName(name string) (*domain.Category, error) {
 	row := s.db.QueryRow("SELECT category_name FROM categories WHERE category_name = ?", name)
 
-	category := new(models.Category)
+	category := new(domain.Category)
 	err := row.Scan(&category.Name)
 	if err != nil {
 

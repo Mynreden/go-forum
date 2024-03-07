@@ -3,7 +3,7 @@ package comment
 import (
 	"database/sql"
 	"fmt"
-	"forum/internal/models"
+	"forum/internal/domain"
 )
 
 type CommentStorage struct {
@@ -14,7 +14,7 @@ func NewCommentStorage(db *sql.DB) *CommentStorage {
 	return &CommentStorage{db: db}
 }
 
-func (s CommentStorage) CreateComment(comment *models.Comment) error {
+func (s CommentStorage) CreateComment(comment *domain.Comment) error {
 	query := `INSERT INTO comments (comment, post_id, user_id, userName, created_at) VALUES (?, ?, ?, ?, ?)`
 	result, err := s.db.Exec(
 		query,
@@ -39,7 +39,7 @@ func (s CommentStorage) CreateComment(comment *models.Comment) error {
 	return nil
 }
 
-func (s CommentStorage) GetAllByPostID(postID int) ([]*models.Comment, error) {
+func (s CommentStorage) GetAllByPostID(postID int) ([]*domain.Comment, error) {
 	query := `SELECT id, comment, post_id, user_id, userName, created_at FROM comments WHERE post_id = ?`
 	rows, err := s.db.Query(query, postID)
 	if err != nil {
@@ -48,9 +48,9 @@ func (s CommentStorage) GetAllByPostID(postID int) ([]*models.Comment, error) {
 	}
 	defer rows.Close()
 
-	comments := make([]*models.Comment, 0)
+	comments := make([]*domain.Comment, 0)
 	for rows.Next() {
-		comment := new(models.Comment)
+		comment := new(domain.Comment)
 		err := rows.Scan(
 			&comment.ID,
 			&comment.Content,
@@ -75,11 +75,11 @@ func (s CommentStorage) GetAllByPostID(postID int) ([]*models.Comment, error) {
 	return comments, nil
 }
 
-func (s *CommentStorage) GetCommentByID(id int) (*models.Comment, error) {
+func (s *CommentStorage) GetCommentByID(id int) (*domain.Comment, error) {
 	query := `SELECT id, comment, post_id, user_id, userName, created_at FROM comments WHERE id = ?`
 	row := s.db.QueryRow(query, id)
 
-	comment := &models.Comment{}
+	comment := &domain.Comment{}
 	err := row.Scan(&comment.ID,
 		&comment.Content,
 		&comment.PostID,

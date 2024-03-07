@@ -2,7 +2,7 @@ package session
 
 import (
 	"database/sql"
-	"forum/internal/models"
+	"forum/internal/domain"
 )
 
 type SessionStorage struct {
@@ -13,7 +13,7 @@ func NewSessionStorage(db *sql.DB) *SessionStorage {
 	return &SessionStorage{db}
 }
 
-func (s *SessionStorage) CreateSession(session *models.Session) error {
+func (s *SessionStorage) CreateSession(session *domain.Session) error {
 	_, err := s.db.Exec("INSERT INTO sessions (uuid, user_id, expire_at) VALUES ($1, $2, $3)", session.UUID, session.User_id, session.ExpireAt)
 	if err != nil {
 		return err
@@ -22,8 +22,8 @@ func (s *SessionStorage) CreateSession(session *models.Session) error {
 	return nil
 }
 
-func (s *SessionStorage) GetSessionByUserID(userID int) (*models.Session, error) {
-	var session models.Session
+func (s *SessionStorage) GetSessionByUserID(userID int) (*domain.Session, error) {
+	var session domain.Session
 	err := s.db.QueryRow("SELECT * FROM sessions WHERE user_ID = $1", userID).Scan(&session.UUID, &session.User_id, &session.ExpireAt)
 	if err != nil {
 		return nil, err
@@ -32,8 +32,8 @@ func (s *SessionStorage) GetSessionByUserID(userID int) (*models.Session, error)
 	return &session, nil
 }
 
-func (s *SessionStorage) GetSessionByUUID(sessionID string) (*models.Session, error) {
-	var session models.Session
+func (s *SessionStorage) GetSessionByUUID(sessionID string) (*domain.Session, error) {
+	var session domain.Session
 	err := s.db.QueryRow("SELECT * FROM sessions WHERE uuid = $1", sessionID).Scan(&session.UUID, &session.User_id, &session.ExpireAt)
 	if err != nil {
 		return nil, err
@@ -53,7 +53,7 @@ func (s *SessionStorage) DeleteSessionByUUID(sessionID string) error {
 	return nil
 }
 
-func (s *SessionStorage) GetUserIdBySession(session *models.Session) (user_id int, err error) {
+func (s *SessionStorage) GetUserIdBySession(session *domain.Session) (user_id int, err error) {
 	err = s.db.QueryRow("SELECT user_id FROM sessions WHERE uuid = $1", session.UUID).Scan(&user_id)
 	if err != nil {
 		return 0, err

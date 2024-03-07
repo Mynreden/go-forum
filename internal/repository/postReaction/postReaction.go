@@ -2,7 +2,7 @@ package postReaction
 
 import (
 	"database/sql"
-	"forum/internal/models"
+	"forum/internal/domain"
 )
 
 type PostReactionRepo struct {
@@ -13,7 +13,7 @@ func NewPostReactionStorage(db *sql.DB) *PostReactionRepo {
 	return &PostReactionRepo{db}
 }
 
-func (repo *PostReactionRepo) CreatePostReaction(reaction *models.PostReactionDTO) error {
+func (repo *PostReactionRepo) CreatePostReaction(reaction *domain.PostReactionDTO) error {
 
 	query := "INSERT INTO postsReactions (user_id, post_id, reaction) VALUES (?, ?, ?)"
 
@@ -31,18 +31,18 @@ func (repo *PostReactionRepo) CreatePostReaction(reaction *models.PostReactionDT
 	return nil
 }
 
-func (repo *PostReactionRepo) GetPostReactionsByPostID(postID int) ([]*models.PostReaction, error) {
+func (repo *PostReactionRepo) GetPostReactionsByPostID(postID int) ([]*domain.PostReaction, error) {
 	rows, err := repo.db.Query("SELECT reaction FROM postsReactions WHERE post_id = ?", postID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var reactions []*models.PostReaction
+	var reactions []*domain.PostReaction
 
 	for rows.Next() {
 		// Инициализация экземпляра PostReaction перед использованием
-		reaction := &models.PostReaction{}
+		reaction := &domain.PostReaction{}
 
 		err := rows.Scan(&reaction.Status)
 		if err != nil {
@@ -58,7 +58,7 @@ func (repo *PostReactionRepo) GetPostReactionsByPostID(postID int) ([]*models.Po
 	return reactions, nil
 }
 
-func (repo *PostReactionRepo) GetPostsReactionsByUserID(userID int) ([]*models.PostReaction, error) {
+func (repo *PostReactionRepo) GetPostsReactionsByUserID(userID int) ([]*domain.PostReaction, error) {
 
 	rows, err := repo.db.Query("SELECT post_id, reaction FROM postsReactions WHERE user_id = ?", userID)
 
@@ -68,10 +68,10 @@ func (repo *PostReactionRepo) GetPostsReactionsByUserID(userID int) ([]*models.P
 
 	defer rows.Close()
 
-	var reactions []*models.PostReaction
+	var reactions []*domain.PostReaction
 
 	for rows.Next() {
-		var reaction *models.PostReaction
+		var reaction = domain.PostReaction{UserID: userID}
 
 		err := rows.Scan(
 			&reaction.PostID,
@@ -82,7 +82,7 @@ func (repo *PostReactionRepo) GetPostsReactionsByUserID(userID int) ([]*models.P
 
 			return nil, err
 		}
-		reactions = append(reactions, reaction)
+		reactions = append(reactions, &reaction)
 	}
 
 	if err := rows.Err(); err != nil {
@@ -92,7 +92,7 @@ func (repo *PostReactionRepo) GetPostsReactionsByUserID(userID int) ([]*models.P
 	return reactions, nil
 }
 
-func (repo *PostReactionRepo) GetAllPostReactions() ([]*models.PostReaction, error) {
+func (repo *PostReactionRepo) GetAllPostReactions() ([]*domain.PostReaction, error) {
 
 	rows, err := repo.db.Query("SELECT user_id, post_id, reaction FROM postsReactions")
 
@@ -101,10 +101,10 @@ func (repo *PostReactionRepo) GetAllPostReactions() ([]*models.PostReaction, err
 	}
 	defer rows.Close()
 
-	var reactions []*models.PostReaction
+	var reactions []*domain.PostReaction
 
 	for rows.Next() {
-		var reaction models.PostReaction
+		var reaction domain.PostReaction
 		err := rows.Scan(
 			&reaction.UserID,
 			&reaction.PostID,
@@ -124,11 +124,11 @@ func (repo *PostReactionRepo) GetAllPostReactions() ([]*models.PostReaction, err
 	return reactions, nil
 }
 
-func (repo *PostReactionRepo) GetReactionByUserIDAndPostID(userID, postID int) (*models.PostReaction, error) {
+func (repo *PostReactionRepo) GetReactionByUserIDAndPostID(userID, postID int) (*domain.PostReaction, error) {
 	// Запрос с использованием WHERE для фильтрации по userID и postID
 	row := repo.db.QueryRow("SELECT id, reaction FROM postsReactions WHERE user_id = ? AND post_id = ?", userID, postID)
 
-	var reaction models.PostReaction
+	var reaction = domain.PostReaction{UserID: userID, PostID: postID}
 	// Сканирование данных в структуру
 	err := row.Scan(
 		&reaction.ID,

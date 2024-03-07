@@ -2,7 +2,7 @@ package commentsReaction
 
 import (
 	"database/sql"
-	"forum/internal/models"
+	"forum/internal/domain"
 )
 
 type CommentsReactionsStorage struct {
@@ -13,7 +13,7 @@ func NewCommentsReactionsStorage(db *sql.DB) *CommentsReactionsStorage {
 	return &CommentsReactionsStorage{db}
 }
 
-func (repo *CommentsReactionsStorage) CreateCommentsReactions(reaction *models.CommentReactionDTO) error {
+func (repo *CommentsReactionsStorage) CreateCommentsReactions(reaction *domain.CommentReactionDTO) error {
 	query := "INSERT INTO commentsReactions (user_id, comment_id, reaction) VALUES (?, ?, ?)"
 
 	_, err := repo.db.Exec(
@@ -34,9 +34,9 @@ func (repo *CommentsReactionsStorage) DeleteCommentsReactions(commentID int) err
 	return err
 }
 
-func (repo *CommentsReactionsStorage) GetReactionByUserIDAndCommentID(userID, commentID int) (*models.CommentReaction, error) {
+func (repo *CommentsReactionsStorage) GetReactionByUserIDAndCommentID(userID, commentID int) (*domain.CommentReaction, error) {
 
-	var reaction models.CommentReaction
+	var reaction domain.CommentReaction
 	row := repo.db.QueryRow("SELECT id, reaction FROM commentsReactions WHERE user_id = ? AND comment_id = ?", userID, commentID)
 	// Сканирование данных в структуру
 	err := row.Scan(
@@ -52,18 +52,18 @@ func (repo *CommentsReactionsStorage) GetReactionByUserIDAndCommentID(userID, co
 	return &reaction, nil
 }
 
-func (repo *CommentsReactionsStorage) GetReactionsByCommentID(commentID int) ([]*models.CommentReaction, error) {
+func (repo *CommentsReactionsStorage) GetReactionsByCommentID(commentID int) ([]*domain.CommentReaction, error) {
 	rows, err := repo.db.Query("SELECT reaction FROM commentsReactions WHERE comment_id = ?", commentID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var reactions []*models.CommentReaction
+	var reactions []*domain.CommentReaction
 
 	for rows.Next() {
 		// Инициализация экземпляра PostReaction перед использованием
-		reaction := &models.CommentReaction{}
+		reaction := &domain.CommentReaction{}
 
 		err := rows.Scan(&reaction.Status)
 		if err != nil {
@@ -79,8 +79,8 @@ func (repo *CommentsReactionsStorage) GetReactionsByCommentID(commentID int) ([]
 	return reactions, nil
 }
 
-func (s *CommentsReactionsStorage) GetVotesByCommentID(commentID int) ([]*models.CommentReactionDTO, error) {
-	var votes []*models.CommentReactionDTO
+func (s *CommentsReactionsStorage) GetVotesByCommentID(commentID int) ([]*domain.CommentReactionDTO, error) {
+	var votes []*domain.CommentReactionDTO
 	rows, err := s.db.Query("SELECT * FROM commentsReactions WHERE comment_id = $1", commentID)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (s *CommentsReactionsStorage) GetVotesByCommentID(commentID int) ([]*models
 	defer rows.Close()
 
 	for rows.Next() {
-		var v models.CommentReactionDTO
+		var v domain.CommentReactionDTO
 		err := rows.Scan(
 			&v.ID,
 			&v.UserID,

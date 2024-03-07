@@ -3,18 +3,18 @@ package postReaction
 import (
 	"database/sql"
 	"errors"
-	"forum/internal/models"
+	"forum/internal/domain"
 )
 
 type PostReactionService struct {
-	repo models.PostReactionRepo
+	repo domain.PostReactionRepo
 }
 
-func NewPostReactionService(repo models.PostReactionRepo) *PostReactionService {
+func NewPostReactionService(repo domain.PostReactionRepo) *PostReactionService {
 	return &PostReactionService{repo}
 }
 
-func (s *PostReactionService) CreatePostReaction(reaction *models.PostReactionDTO) error {
+func (s *PostReactionService) CreatePostReaction(reaction *domain.PostReactionDTO) error {
 	r, err := s.repo.GetReactionByUserIDAndPostID(reaction.UserID, reaction.PostID)
 
 	if err != nil {
@@ -31,7 +31,7 @@ func (s *PostReactionService) CreatePostReaction(reaction *models.PostReactionDT
 	return s.repo.CreatePostReaction(reaction)
 }
 
-func (s *PostReactionService) GetAllPostReactionsByPostID(posts []*models.Post) error {
+func (s *PostReactionService) GetAllPostReactionsByPostID(posts []*domain.Post) error {
 	for i, r := range posts {
 		reactions, err := s.repo.GetPostReactionsByPostID(r.ID)
 		if err != nil {
@@ -62,7 +62,7 @@ func (s *PostReactionService) GetAllPostReactionsByPostID(posts []*models.Post) 
 	return nil
 }
 
-func (s *PostReactionService) PutReactionsToPost(post *models.Post) error {
+func (s *PostReactionService) PutReactionsToPost(post *domain.Post) error {
 	reactions, err := s.repo.GetPostReactionsByPostID(post.ID)
 	if err != nil {
 		if !errors.Is(err, sql.ErrNoRows) {

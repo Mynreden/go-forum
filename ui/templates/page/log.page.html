@@ -150,7 +150,7 @@
     </style>
   </head>
   <body>
-    <form action="/login" method="post">
+    <form action="/auth/login" method="post">
       {{with .Form}} {{with .Errors.Get "email"}}
       <div class="error">{{.}}</div>
       {{end}}
