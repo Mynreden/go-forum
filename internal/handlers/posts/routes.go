@@ -10,6 +10,8 @@ func (h *Handler) Routes() http.Handler {
 
 	router.Handle("/create", http.HandlerFunc(h.createPost)).Methods(http.MethodPost)
 	router.Handle("/reaction", http.HandlerFunc(h.reactionPost)).Methods(http.MethodPost)
+	router.Handle("/edit", http.HandlerFunc(h.edit)).Methods(http.MethodPut)
+	router.Handle("/delete", http.HandlerFunc(h.delete)).Methods(http.MethodDelete)
 
 	return router
 }

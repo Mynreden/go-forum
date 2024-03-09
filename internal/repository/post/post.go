@@ -84,12 +84,54 @@ func (s *PostStorage) CreatePostWithImage(p *domain.Post) (int, error) {
 	return p.ID, nil
 }
 
-func (s *PostStorage) DeletePost(post *domain.Post) error {
+func (s *PostStorage) DeletePost(id int) error {
+	query := `DELETE FROM posts WHERE id = ?;`
+	args := []interface{}{id}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	_, err := s.db.ExecContext(ctx, query, args...)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
-func (s *PostStorage) UpdatePost(post *domain.Post) error {
-	return nil
+func (s *PostStorage) EditPost(p *domain.Post) (int, error) {
+	query := `UPDATE posts SET title = $1, content= $2, author_id = $3, authorname = $4, updated_at = $5  WHERE id = $7
+	RETURNING id, created_at, updated_at`
+
+	args := []interface{}{p.Title, p.Content, p.AuthorID, p.AuthorName, p.UpdatedAt, p.ID}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	err := s.db.QueryRowContext(ctx, query, args...).Scan(&p.ID, &p.CreatedAt, &p.UpdatedAt)
+	if err != nil {
+		return 0, err
+		// return 0, err
+	}
+
+	delQuery := `DELETE FROM PostCategories WHERE post_id = $1`
+
+	delArgs := []interface{}{p.ID}
+
+	_, err = s.db.ExecContext(ctx, delQuery, delArgs...)
+	if err != nil {
+		return 0, err
+	}
+
+	for _, category := range p.Categories {
+
+		query = `INSERT INTO PostCategories (post_id, category_name) VALUES ($1, $2)`
+		_, err = s.db.ExecContext(ctx, query, p.ID, category.Name)
+		if err != nil {
+			return 0, err
+		}
+	}
+
+	return p.ID, nil
 }
 
 func (s *PostStorage) GetAllPosts(offset, limit int) ([]*domain.Post, error) {

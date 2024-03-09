@@ -18,7 +18,7 @@ func NewPostService(repo domain.PostRepo) *PostService {
 }
 
 func (s *PostService) DeletePost(id int) error {
-	return nil
+	return s.repo.DeletePost(id)
 }
 
 func (p *PostService) CreatePost(postDTO *domain.CreatePostDTO) (int, error) {
@@ -74,8 +74,17 @@ func (p *PostService) CreatePostWithImage(postDTO *domain.CreatePostDTO) (int, e
 	return id, nil
 }
 
-func (s *PostService) UpdatePost(post *domain.Post) error {
-	return nil
+func (s *PostService) EditPostWithImage(postDTO *domain.CreatePostDTO, id int) (int, error) {
+	post := &domain.Post{
+		ID:         id,
+		Title:      postDTO.Title,
+		Content:    postDTO.Content,
+		AuthorID:   postDTO.Author,
+		AuthorName: postDTO.AuthorName,
+		Categories: postDTO.Categories,
+		UpdatedAt:  time.Now(),
+	}
+	return s.repo.EditPost(post)
 }
 
 func (s *PostService) GetPostsByAuthorID(author int, offset int, limit int) ([]*domain.Post, error) {

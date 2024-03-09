@@ -1,4 +1,4 @@
-package auth
+package user
 
 import (
 	"forum/internal/domain"
@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) delete(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/login" {
 		http.Error(w, "Page not found", http.StatusNotFound)
 		return

@@ -47,7 +47,7 @@ type PostService interface {
 	GetPostByID(id int) (*Post, error)
 	GetAllPosts(offset, limit int) ([]*Post, error)
 	GetPostsByAuthorID(author int, offset int, limit int) ([]*Post, error)
-	UpdatePost(post *Post) error
+	EditPostWithImage(p *CreatePostDTO, id int) (int, error)
 	DeletePost(id int) error
 	GetLikedPosts(id int, offset int, limit int) ([]*Post, error)
 	GetPostsByCategory(category string, offset int, limit int) ([]*Post, error)
@@ -59,6 +59,8 @@ type PostRepo interface {
 	CreatePostWithImage(post *Post) (int, error)
 	GetAllPosts(offset, limit int) ([]*Post, error)
 	GetPostByID(id int) (*Post, error)
+	EditPost(post *Post) (int, error)
+	DeletePost(id int) error
 	GetLikedPosts(id int, offset int, limit int) ([]*Post, error)
 	GetPostsByCategory(category string, offset int, limit int) ([]*Post, error)
 	GetPostsByAuthor(author int, offset int, limit int) ([]*Post, error)

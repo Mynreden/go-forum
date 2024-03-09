@@ -247,3 +247,48 @@ document.addEventListener("DOMContentLoaded", function () {
     lastPreElement.textContent += "...";
   }
 });
+
+
+const openModalBtn = document.getElementById('open-modal');
+const modal = document.querySelector('.modal');
+const closeModalBtn = modal.querySelector('.close-modal');
+
+// Функция открытия модального окна
+function openModal() {
+  modal.style.display = 'block';
+}
+
+// Функция закрытия модального окна
+function closeModal() {
+  modal.style.display = 'none';
+}
+
+openModalBtn.addEventListener('click', openModal);
+
+// Обработчик события закрытия модального окна
+closeModalBtn.addEventListener('click', closeModal);
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    closeModal();
+  }
+});
+
+// Функция центрирования модального окна
+function centerModal() {
+  const modalWidth = modal.offsetWidth;
+  const modalHeight = modal.offsetHeight;
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
+  modal.style.left = `${(windowWidth - modalWidth) / 2}px`;
+  modal.style.top = `${(windowHeight - modalHeight) / 2}px`;
+}
+
+// Вызов функции центрирования модального окна
+centerModal();
+
+// Функция добавления/удаления класса 'active' к модальному окну
+function toggleModalActive() {
+  modal.classList.toggle('active');
+}

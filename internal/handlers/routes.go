@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"forum/internal/handlers/auth"
 	"forum/internal/handlers/comments"
 	"forum/internal/handlers/middlewares"
 	"forum/internal/handlers/posts"
+	"forum/internal/handlers/user"
 	"forum/internal/handlers/web"
 	"github.com/gorilla/mux"
 	"net/http"
@@ -14,7 +14,7 @@ import (
 func (h *Handler) Routes() http.Handler {
 	router := mux.NewRouter()
 
-	authHandler := auth.NewAuthHandler(h.service, h.templates)
+	authHandler := user.NewAuthHandler(h.service, h.templates)
 	commentsHandler := comments.NewCommentsHandler(h.service)
 	middleware := middlewares.NewMiddleware(h.service)
 	webHandler := web.NewWebHandler(h.service, h.templates)

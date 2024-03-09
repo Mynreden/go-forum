@@ -8,12 +8,25 @@ import (
 	"forum/pkg/forms"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
-func (h *Handler) createPost(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/create" {
+func (h *Handler) edit(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/edit" {
 		http.Error(w, "Not found", http.StatusNotFound)
+		return
+	}
+	urlId := r.URL.Query().Get("id")
+	if urlId == "" {
+		http.Error(w, "Invalid id", http.StatusInternalServerError)
+		return
+	}
+	id, err := strconv.ParseInt(urlId, 10, 64)
+	if err != nil {
+		h.service.Log.Println(err)
+
+		http.Error(w, "Pasre error", http.StatusInternalServerError)
 		return
 	}
 
@@ -29,6 +42,7 @@ func (h *Handler) createPost(w http.ResponseWriter, r *http.Request) {
 	form.Required("title", "content")
 	form.MaxLength("title", 100)
 	form.MaxLength("content", 500)
+
 	if !form.Valid() {
 
 		categories, err := h.service.CategoryService.GetAllCategories()
@@ -38,9 +52,6 @@ func (h *Handler) createPost(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-
-		// form.Errors.Add("generic", "Form is not valid")
-		// form.Categories = append(form.Categories, categories...)
 
 		w.WriteHeader(http.StatusBadRequest)
 		h.templates.Render(w, r, "error.page.html", &render.PageData{
@@ -162,7 +173,7 @@ func (h *Handler) createPost(w http.ResponseWriter, r *http.Request) {
 
 	post.Categories = append(post.Categories, categories...)
 
-	post_id, err := h.service.PostService.CreatePostWithImage(post)
+	post_id, err := h.service.PostService.EditPostWithImage(post, int(id))
 	if err != nil {
 		h.service.Log.Println(err)
 
@@ -170,4 +181,5 @@ func (h *Handler) createPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	http.Redirect(w, r, fmt.Sprintf("/post?id=%d", post_id), http.StatusFound)
+
 }

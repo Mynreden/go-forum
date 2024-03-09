@@ -14,7 +14,7 @@ import (
 	"testing"
 )
 
-func NewTestHandler(t *testing.T) *handlers.Handler {
+func NewTestServer(t *testing.T) *handlers.Handler {
 	db, _, err := sqlmock.New()
 	if err != nil {
 		t.Fatalf("an error '%s' occurred while opening a stub database connection", err)

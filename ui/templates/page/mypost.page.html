@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{.Topic}}</title>
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+    />
+</head>
+<body>
+<div class="wrapper">
+    {{template "header" .}}
+    <div class="main">
+        <div class="container">
+            <div class="main_page">
+                {{template "nav_bar" .}}
+                <div class="main_posts_datas fl_r">
+                    <div class="posts">
+                        <div class="post-table">
+                            <div class="post-header">
+                                <div class="post-autor-datas">
+                                    <div class="post-autorname">{{.Post.AuthorName}}</div>
+                                    <div class="post-createdtime">
+                                        {{humanDate .Post.CreatedAt}}
+                                    </div>
+                                </div>
+                                <div class="post-ctg">
+                                    {{range .Post.Categories}}
+                                    <div id="categories-container">
+                                        <pre class="post-category-anme">{{.Name}} </pre>
+                                    </div>
+                                    {{end}}
+                                </div>
+                            </div>
+                            <div class="post-content-datas">
+                                <img src="{{.Post.ImagePath}}" alt="" />
+                                <div class="post-title">{{.Post.Title}}</div>
+                                <div class="post-content">{{.Post.Content}}</div>
+                            </div>
+                            <div class="post-reactions-datas">
+                                <form action="/post/reaction" method="POST">
+                                    <input
+                                            type="hidden"
+                                            name="post_id"
+                                            value="{{.Post.ID}}"
+                                    />
+                                    <input type="hidden" name="status" value="1" />
+                                    <button type="submit">
+                                        <img
+                                                src="/static/assets/8300917.png"
+                                                class="reaction"
+                                                style="transform: scaleY(-1)"
+                                                alt="like button"
+                                        />
+                                        {{.Post.Likes}}
+                                    </button>
+                                </form>
+                                <form action="/post/reaction" method="POST">
+                                    <input
+                                            type="hidden"
+                                            name="post_id"
+                                            value="{{.Post.ID}}"
+                                    />
+                                    <input type="hidden" name="status" value="0" />
+                                    <button type="submit">
+                                        <img
+                                                src="/static/assets/8300917.png"
+                                                class="reaction"
+                                                alt="dislike button"
+                                        />
+                                        {{.Post.Dislikes}}
+                                    </button>
+                                </form>
+                                <div class="post-actions">
+                                    <button class="" id="">
+                                        Edit Post
+                                    </button>
+
+                                    <div class="container">
+                                        <button class="btn btn-primary" id="open-modal">Открыть модальное окно</button>
+
+                                        <div class="modal" style="display: none;">
+                                            <div class="modal-header">
+                                                <h2>Заголовок модального окна</h2>
+                                                <button class="close-modal">×</button>
+                                            </div>
+                                            <div class="modal-content">
+                                                <p>Введите текст...</p>
+                                                <input type="text" />
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary">Сохранить</button>
+                                                <button class="btn btn-secondary">Отмена</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <form action="/post/delete?id={{.Post.ID}}" method="DELETE">
+                                        <button type="submit">
+                                            Delete Post
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- coments -->
+                    {{template "comments" .}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{template "footer" .}}
+</div>
+<script src="../static/js/main.js"></script>
+</body>
+</html>
