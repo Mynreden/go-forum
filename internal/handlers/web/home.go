@@ -13,7 +13,6 @@ func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Not found", http.StatusNotFound)
 		return
 	}
-	println("dsfsfd")
 	form := forms.New(r.PostForm)
 	limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 	if err != nil {

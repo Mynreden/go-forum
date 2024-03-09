@@ -249,46 +249,18 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-const openModalBtn = document.getElementById('open-modal');
-const modal = document.querySelector('.modal');
-const closeModalBtn = modal.querySelector('.close-modal');
+const deletePost = async (id) => {
+  try {
+    const response = await fetch(`/post/delete?id=${id}`, {
+      method: 'DELETE',
+    });
 
-// Функция открытия модального окна
-function openModal() {
-  modal.style.display = 'block';
-}
+    if (!response.ok) {
+      throw new Error(`Failed to delete post: ${response.statusText}`);
+    }
 
-// Функция закрытия модального окна
-function closeModal() {
-  modal.style.display = 'none';
-}
-
-openModalBtn.addEventListener('click', openModal);
-
-// Обработчик события закрытия модального окна
-closeModalBtn.addEventListener('click', closeModal);
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') {
-    closeModal();
+    window.location.href = "/myposts"
+  } catch (error) {
+    console.error('Error deleting post:', error);
   }
-});
-
-// Функция центрирования модального окна
-function centerModal() {
-  const modalWidth = modal.offsetWidth;
-  const modalHeight = modal.offsetHeight;
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
-
-  modal.style.left = `${(windowWidth - modalWidth) / 2}px`;
-  modal.style.top = `${(windowHeight - modalHeight) / 2}px`;
-}
-
-// Вызов функции центрирования модального окна
-centerModal();
-
-// Функция добавления/удаления класса 'active' к модальному окну
-function toggleModalActive() {
-  modal.classList.toggle('active');
-}
+};

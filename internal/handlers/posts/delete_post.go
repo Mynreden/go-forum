@@ -2,6 +2,7 @@ package posts
 
 import (
 	"fmt"
+	"forum/internal/handlers/utils"
 	"net/http"
 	"strconv"
 )
@@ -11,6 +12,7 @@ func (h *Handler) delete(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Not found", http.StatusNotFound)
 		return
 	}
+
 	urlId := r.URL.Query().Get("id")
 	if urlId == "" {
 		http.Error(w, "Invalid id", http.StatusInternalServerError)
@@ -21,6 +23,21 @@ func (h *Handler) delete(w http.ResponseWriter, r *http.Request) {
 		h.service.Log.Println(err)
 
 		http.Error(w, "Parse error", http.StatusInternalServerError)
+		return
+	}
+
+	user := utils.GetUserFromContext(r)
+	post, err := h.service.PostService.GetPostByID(int(id))
+
+	if err != nil {
+		h.service.Log.Println(err)
+		http.Error(w, "Post not found", http.StatusNotFound)
+		return
+	}
+
+	if user.ID != post.AuthorID {
+		h.service.Log.Println(err)
+		http.Error(w, "You cannot delete foreign posts", http.StatusBadRequest)
 		return
 	}
 

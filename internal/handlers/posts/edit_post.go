@@ -30,6 +30,21 @@ func (h *Handler) edit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	user := utils.GetUserFromContext(r)
+	oldPost, err := h.service.PostService.GetPostByID(int(id))
+
+	if err != nil {
+		h.service.Log.Println(err)
+		http.Error(w, "Post not found", http.StatusNotFound)
+		return
+	}
+
+	if user.ID != oldPost.AuthorID {
+		h.service.Log.Println(err)
+		http.Error(w, "You cannot delete foreign posts", http.StatusBadRequest)
+		return
+	}
+
 	if err := r.ParseMultipartForm(20 << 20); err != nil {
 		h.service.Log.Println(err)
 

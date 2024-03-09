@@ -493,3 +493,191 @@ ERROR: 2024/03/09 13:25:05 home.go:20: strconv.Atoi: parsing "": invalid syntax
 ERROR: 2024/03/09 13:25:05 home.go:25: strconv.Atoi: parsing "": invalid syntax
 ERROR: 2024/03/09 13:25:05 home.go:20: strconv.Atoi: parsing "": invalid syntax
 ERROR: 2024/03/09 13:25:05 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:28:02 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:28:02 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:28:30 show_myposts.go:30: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:28:30 show_myposts.go:36: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:34:59 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:34:59 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:35:04 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:35:04 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:35:07 show_myposts.go:30: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:35:07 show_myposts.go:36: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:36:40 show_myposts.go:30: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:36:40 show_myposts.go:36: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:49:07 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:49:07 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:53:42 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 13:53:42 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 13:55:07 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 13:55:07 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:55:07 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 13:59:10 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 13:59:37 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 13:59:42 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 13:59:45 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:00:01 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:00:01 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:00:01 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:00:08 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:00:31 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:01:49 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:01:56 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:02:25 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:03:23 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:03:36 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:03:36 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:03:48 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:03:48 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:03:49 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:03:49 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:03:59 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:03:59 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:04:21 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:04:21 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:04:36 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:04:36 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:05:07 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:05:07 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:05:40 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:05:43 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:05:43 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:05:43 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:06:34 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:06:34 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:06:51 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:06:51 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:07:02 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:07:02 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:07:02 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:07:02 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:07:02 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:07:03 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:07:13 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:07:13 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:07:17 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:07:19 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:07:19 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:07:19 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:09:08 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:09:08 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:09:08 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:09:09 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:09:21 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:12:03 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:12:03 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:12:18 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:12:18 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:12:21 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:12:21 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:12:21 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:12:23 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:12:35 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:12:35 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:12:35 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:12:46 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:12:46 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:13:57 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:13:57 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:13:57 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:14:13 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:14:18 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:14:18 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:14:21 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:14:21 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:14:24 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:14:24 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:18:04 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:18:04 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:18:49 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:18:49 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:19:22 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:19:22 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:19:22 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:19:22 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:19:28 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:19:28 home.go:20: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:19:28 home.go:25: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:20:00 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:20:00 home.go:19: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:20:00 home.go:24: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:20:07 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:20:07 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:20:48 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:20:48 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:22:31 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:22:31 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:24:46 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:24:46 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:24:51 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:24:51 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:28:39 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:28:39 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:28:44 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:28:44 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:28:45 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:28:45 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:29:23 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:29:23 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:29:33 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:29:33 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:29:38 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:29:42 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:29:42 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:29:44 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:29:47 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:29:47 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:30:37 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:30:37 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:35:29 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:35:29 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:35:59 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:35:59 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:38:23 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:38:27 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:38:27 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:38:29 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:38:29 login.go:50: invalid credentials
+ERROR: 2024/03/09 14:38:47 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:38:47 home.go:19: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:38:47 home.go:24: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:39:02 home.go:19: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:39:02 home.go:24: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:39:16 home.go:19: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:39:16 home.go:24: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:40:41 delete_post.go:41: <nil>
+ERROR: 2024/03/09 14:42:48 show_myposts.go:30: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:42:48 show_myposts.go:36: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:42:59 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:42:59 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:43:03 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:43:03 home.go:19: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:43:03 home.go:24: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:44:38 middleware.go:32: sql: no rows in result set
+ERROR: 2024/03/09 14:44:38 home.go:19: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:44:38 home.go:24: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:44:42 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:44:42 home.go:19: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:44:42 home.go:24: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:44:45 home.go:19: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:44:45 home.go:24: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:45:04 middleware.go:32: sql: no rows in result set
+ERROR: 2024/03/09 14:45:07 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:45:07 home.go:19: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:45:07 home.go:24: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:46:40 middleware.go:32: sql: no rows in result set
+ERROR: 2024/03/09 14:46:40 middleware.go:32: sql: no rows in result set
+ERROR: 2024/03/09 14:46:53 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:46:53 home.go:19: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:46:53 home.go:24: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:47:04 edit_post.go:34: request Content-Type isn't multipart/form-data
+ERROR: 2024/03/09 14:49:38 edit_post.go:79: http: no such file
+ERROR: 2024/03/09 14:49:50 middleware.go:32: sql: no rows in result set
+ERROR: 2024/03/09 14:50:00 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:50:04 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:50:04 home.go:19: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:50:04 home.go:24: strconv.Atoi: parsing "": invalid syntax
+ERROR: 2024/03/09 14:50:06 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:50:08 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:50:13 middleware.go:25: http: named cookie not present
+ERROR: 2024/03/09 14:50:16 middleware.go:25: http: named cookie not present
